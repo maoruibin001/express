@@ -9,6 +9,21 @@ var multer = require('multer');
 
 var app = express();
 
+// 允许所有的请求形式
+// app.all('*',function (req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+//     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+//
+//     if (req.method == 'OPTIONS') {
+//         res.send(200); /让options请求快速返回/
+//     }
+//     else {
+//         next();
+//     }
+// });
+
+
 app.use(express.static('../public/'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(multer({dest: '../dest'}).any());
@@ -17,6 +32,13 @@ app.use(multer({dest: '../dest'}).any());
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, './upload.html'));
 });
+app.get('/getData2', function(req, res) {
+    console.log(2222);
+    // res.json({name: 'maoruibin', age: 20});
+    res.send('22222222')
+});
+
+
 
 app.post('/upload', function(req, res) {
     console.log(req.files[0]);
@@ -40,7 +62,7 @@ app.post('/upload', function(req, res) {
 });
 
 
-var server = app.listen(8807, function() {
+var server = app.listen(8809, 'localhost', function() {
     var port = server.address().port;
     console.log('server start at: http://localhost:' + port);
 })
